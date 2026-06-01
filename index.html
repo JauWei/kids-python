@@ -35,10 +35,12 @@
 <script type="text/babel" src="characters.jsx"></script>
 <script type="text/babel" src="playground.jsx"></script>
 <script type="text/babel" src="chat.jsx"></script>
+<script type="text/babel" src="daily.jsx"></script>
 <script type="text/babel" src="lessons.jsx"></script>
 <script type="text/babel" src="lessons2.jsx"></script>
 <script type="text/babel" src="lessons3.jsx"></script>
 <script type="text/babel" src="lessons4.jsx"></script>
+<script type="text/babel" src="lessons5.jsx"></script>
 
 <script type="text/babel">
 const CHAPTERS = [
@@ -65,6 +67,13 @@ const CHAPTERS = [
   { id: "ch20", num: "20", emoji: "🎮", t: "設計你的遊戲",    en: "Your Game" },
   { id: "ch21", num: "21", emoji: "🗺️", t: "文字冒險",        en: "Text Adventure" },
   { id: "ch22", num: "22", emoji: "🧮", t: "心算練習機",      en: "Math Trainer" },
+  { id: "ch23", num: "23", emoji: "⚡", t: "list 推導式",     en: "List Comp" },
+  { id: "ch24", num: "24", emoji: "🪄", t: "lambda + sorted", en: "Lambda" },
+  { id: "ch25", num: "25", emoji: "📦", t: "JSON",            en: "JSON" },
+  { id: "ch26", num: "26", emoji: "🔧", t: "除錯實戰",        en: "Debugging" },
+  { id: "ch27", num: "27", emoji: "📝", t: "專案:待辦清單",   en: "Todo App" },
+  { id: "ch28", num: "28", emoji: "🔐", t: "專案:密碼產生器", en: "Password Gen" },
+  { id: "ch29", num: "29", emoji: "⌨️", t: "專案:打字練習",   en: "Typing" },
 ];
 
 const PAGES = {
@@ -74,6 +83,8 @@ const PAGES = {
   ch11: Ch11, ch12: Ch12, ch13: Ch13, ch14: Ch14, ch15: Ch15, ch16: Ch16,
   ch17: Ch17, ch18: Ch18, ch19: Ch19, ch20: Ch20,
   ch21: Ch21, ch22: Ch22,
+  ch23: Ch23, ch24: Ch24, ch25: Ch25, ch26: Ch26,
+  ch27: Ch27, ch28: Ch28, ch29: Ch29,
 };
 
 function App() {
@@ -163,6 +174,24 @@ function App() {
           </span>
         </a>
 
+        <button className="toc-item" style={{ color: "#dc2626", marginTop: 4 }}
+          onClick={() => {
+            if (!window.confirm("確定要清空所有學習記錄?\n會清掉:章節進度、Playground 草稿、每日挑戰、API key")) return;
+            try {
+              const keys = Object.keys(localStorage).filter(k => k.startsWith("pyu_"));
+              keys.forEach(k => localStorage.removeItem(k));
+            } catch {}
+            location.reload();
+          }}
+          title="清空所有 localStorage(同台電腦多人用、或想重來時)">
+          <span className="toc-num">🗑️</span>
+          <span className="toc-emoji">↺</span>
+          <span style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 13, fontWeight: 700, lineHeight: 1.2 }}>重設全部</div>
+            <div style={{ fontSize: 10, color: "#fca5a5", fontStyle: "italic", fontFamily: "var(--font-latin)" }}>Clear all progress</div>
+          </span>
+        </button>
+
         <div className="sidebar-progress">
           <div className="sidebar-progress-label">
             <span>🏆 學習進度</span>
@@ -183,7 +212,14 @@ function App() {
         ) : (
           <div key={current} className="animate-fadeup">
             <PageComp/>
-            <div style={{ display: "flex", justifyContent: "space-between", marginTop: 32, gap: 12, flexWrap: "wrap" }}>
+            <div style={{ textAlign: "center", margin: "32px 0 0" }}>
+              <button className="btn btn-ghost"
+                onClick={() => window.askPyu && window.askPyu(`我在學「${CHAPTERS[idx]?.t}」(第 ${CHAPTERS[idx]?.num} 章 ${CHAPTERS[idx]?.en}),有些觀念不太懂。能用簡單的話再講一次嗎?舉個生活例子也行。`)}
+                style={{ background: "#fef9c3", borderColor: "#fde68a", color: "#92400e" }}>
+                🦉 卡關了?問 Py 老師
+              </button>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop: 16, gap: 12, flexWrap: "wrap" }}>
               {prev ? (
                 <button className="btn btn-ghost" onClick={() => go(prev.id)} style={{ flex: 1, minWidth: 200 }}>
                   ← {prev.emoji} {prev.t}

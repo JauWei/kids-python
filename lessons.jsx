@@ -28,6 +28,13 @@ const Home = ({ go }) => {
     { id: "ch20", n: "20", e: "🎮", t: "你的遊戲",     en: "Your Game" },
     { id: "ch21", n: "21", e: "🗺️", t: "文字冒險",     en: "Text Adventure" },
     { id: "ch22", n: "22", e: "🧮", t: "心算練習機",   en: "Math Trainer" },
+    { id: "ch23", n: "23", e: "⚡", t: "list 推導式",  en: "List Comp" },
+    { id: "ch24", n: "24", e: "🪄", t: "lambda+sort",  en: "Lambda" },
+    { id: "ch25", n: "25", e: "📦", t: "JSON",         en: "JSON" },
+    { id: "ch26", n: "26", e: "🔧", t: "除錯實戰",     en: "Debugging" },
+    { id: "ch27", n: "27", e: "📝", t: "待辦清單",     en: "Todo App" },
+    { id: "ch28", n: "28", e: "🔐", t: "密碼產生器",   en: "Password Gen" },
+    { id: "ch29", n: "29", e: "⌨️", t: "打字練習",     en: "Typing" },
   ];
 
   return (
@@ -60,6 +67,8 @@ const Home = ({ go }) => {
           </div>
         </div>
       </div>
+
+      <DailyChallenge go={go}/>
 
       <h3 style={{ fontSize: 18, fontWeight: 800, marginTop: 32, marginBottom: 12, color: "var(--ink-warm)" }}>📚 課程地圖 Curriculum</h3>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 10 }}>

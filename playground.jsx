@@ -196,6 +196,28 @@ const Playground = ({ initialCode = "", turtle = false, hint, rows }) => {
     if (turtle && turtleRef.current) turtleRef.current.innerHTML = "";
   };
 
+  const downloadPy = () => {
+    const blob = new Blob([code], { type: "text/x-python;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `kids_python_${Date.now()}.py`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const explainCode = () => {
+    if (!window.askPyu) return;
+    window.askPyu(`請逐行解釋這段 Python 程式碼,用孩子能懂的話(10-14 歲),控制在 4 段內：\n\n\`\`\`python\n${code}\n\`\`\``);
+  };
+
+  const askForFix = () => {
+    if (!window.askPyu || !errorRaw) return;
+    window.askPyu(`我這段程式碼跑出錯了,幫我看哪裡寫錯、該怎麼修。先指出問題、再給修正建議,簡短就好：\n\n\`\`\`python\n${code}\n\`\`\`\n\n錯誤訊息：\n${errorRaw}`);
+  };
+
   const lineCount = rows || Math.max(4, code.split("\n").length + 1);
   const codeChanged = code !== initialCode;
 
@@ -224,7 +246,14 @@ const Playground = ({ initialCode = "", turtle = false, hint, rows }) => {
         <button className="btn btn-primary" onClick={run} disabled={running || !ready}>
           {!ready ? "🐢 載入 Python 中..." : running ? "🐢 執行中..." : "▶ 執行"}
         </button>
-        <button className="btn btn-ghost" onClick={reset}>↻ 重設</button>
+        <button className="btn btn-ghost" onClick={reset} title="清掉修改,回到原版">↻ 重設</button>
+        <button className="btn btn-ghost" onClick={downloadPy} title="下載成 .py 檔,拿到本機 Python 跑">⬇️ .py</button>
+        <button className="btn btn-ghost" onClick={explainCode} title="請 Py 老師逐行解釋">🦉 解釋</button>
+        {errorRaw && (
+          <button className="btn btn-ghost" onClick={askForFix} title="把錯誤丟給 Py 老師求救" style={{ borderColor: "#fca5a5", color: "#fca5a5" }}>
+            🦉 求救
+          </button>
+        )}
       </div>
       {(output || error) && (
         <div className="playground-output-wrap">

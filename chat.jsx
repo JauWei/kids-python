@@ -57,13 +57,17 @@ const ChatPyu = () => {
     setMessages([]);
   };
 
-  const send = async () => {
-    const text = input.trim();
-    if (!text || sending || !apiKey) return;
+  const sendText = async (rawText) => {
+    const text = (rawText || "").trim();
+    if (!text || sending) return;
+    if (!apiKey) {
+      setOpen(true);
+      setShowKeyForm(true);
+      return;
+    }
 
     const userMsg = { role: "user", text };
     setMessages(m => [...m, userMsg]);
-    setInput("");
     setSending(true);
 
     try {
@@ -100,6 +104,24 @@ const ChatPyu = () => {
     }
     setSending(false);
   };
+
+  const send = () => {
+    const text = input;
+    setInput("");
+    sendText(text);
+  };
+
+  // Expose global askPyu() so Playground / 章末按鈕 can trigger
+  const sendTextRef = React.useRef(sendText);
+  sendTextRef.current = sendText;
+  React.useEffect(() => {
+    window.askPyu = (prompt) => {
+      setOpen(true);
+      // Wait for open transition + state propagation
+      setTimeout(() => sendTextRef.current(prompt), 80);
+    };
+    return () => { try { delete window.askPyu; } catch { window.askPyu = undefined; } };
+  }, []);
 
   // Render assistant text with code blocks
   const renderText = (text) => {
