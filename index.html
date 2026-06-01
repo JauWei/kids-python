@@ -24,11 +24,21 @@
 <script src="https://cdn.jsdelivr.net/npm/skulpt@latest/dist/skulpt.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/skulpt@latest/dist/skulpt-stdlib.js"></script>
 
+<!-- CodeMirror 5: syntax-highlighted code editor -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+
 <script type="text/babel" src="characters.jsx"></script>
 <script type="text/babel" src="playground.jsx"></script>
+<script type="text/babel" src="chat.jsx"></script>
 <script type="text/babel" src="lessons.jsx"></script>
 <script type="text/babel" src="lessons2.jsx"></script>
 <script type="text/babel" src="lessons3.jsx"></script>
+<script type="text/babel" src="lessons4.jsx"></script>
 
 <script type="text/babel">
 const CHAPTERS = [
@@ -53,6 +63,8 @@ const CHAPTERS = [
   { id: "ch18", num: "18", emoji: "📁", t: "檔案 I/O",        en: "Files" },
   { id: "ch19", num: "19", emoji: "🎯", t: "整合:猜數字遊戲", en: "Guess Game" },
   { id: "ch20", num: "20", emoji: "🎮", t: "設計你的遊戲",    en: "Your Game" },
+  { id: "ch21", num: "21", emoji: "🗺️", t: "文字冒險",        en: "Text Adventure" },
+  { id: "ch22", num: "22", emoji: "🧮", t: "心算練習機",      en: "Math Trainer" },
 ];
 
 const PAGES = {
@@ -61,6 +73,7 @@ const PAGES = {
   ch6: Ch6, ch7: Ch7, ch8: Ch8, ch9: Ch9, ch10: Ch10,
   ch11: Ch11, ch12: Ch12, ch13: Ch13, ch14: Ch14, ch15: Ch15, ch16: Ch16,
   ch17: Ch17, ch18: Ch18, ch19: Ch19, ch20: Ch20,
+  ch21: Ch21, ch22: Ch22,
 };
 
 function App() {
@@ -104,6 +117,8 @@ function App() {
   const PageComp = PAGES[current];
 
   return (
+    <>
+    <ChatPyu/>
     <div className="app">
       <aside className="sidebar">
         <div className="sidebar-brand" onClick={() => go("home")}>
@@ -129,6 +144,24 @@ function App() {
             {visited.includes(c.id) && c.id !== "home" && <span style={{ color: "#22c55e", fontSize: 12 }}>✓</span>}
           </button>
         ))}
+
+        <div className="sidebar-section-label" style={{ marginTop: 8 }}>外篇 · Extras</div>
+        <a className="toc-item" href="computer-components.html" style={{ textDecoration: "none" }}>
+          <span className="toc-num">🖥️</span>
+          <span className="toc-emoji">🔬</span>
+          <span style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 13, fontWeight: 700, lineHeight: 1.2 }}>認識電腦組成</div>
+            <div style={{ fontSize: 10, color: "var(--fg-3)", fontStyle: "italic", fontFamily: "var(--font-latin)" }}>Hardware Lab</div>
+          </span>
+        </a>
+        <a className="toc-item" href="cheat-sheet.html" style={{ textDecoration: "none" }}>
+          <span className="toc-num">📑</span>
+          <span className="toc-emoji">⚡</span>
+          <span style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 13, fontWeight: 700, lineHeight: 1.2 }}>Python 速查表</div>
+            <div style={{ fontSize: 10, color: "var(--fg-3)", fontStyle: "italic", fontFamily: "var(--font-latin)" }}>Cheat Sheet</div>
+          </span>
+        </a>
 
         <div className="sidebar-progress">
           <div className="sidebar-progress-label">
@@ -170,6 +203,7 @@ function App() {
         )}
       </main>
     </div>
+    </>
   );
 }
 

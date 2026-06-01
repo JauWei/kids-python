@@ -121,6 +121,8 @@ for i in range(7, 0, -1):
     print("🌟" * i)`}/>
     </div>
 
+    <Practice items={["印出 1 到 100 所有 3 的倍數(用 range(3, 101, 3))。", "用 for 把 1 加到 100,印出總和。", "印一個倒三角形星星(7 行,第 N 行印 8-N 顆星)。"]}/>
+
     <Quiz q="range(2, 8) 會給出哪些數字?"
       opts={["2, 3, 4, 5, 6, 7, 8", "2, 3, 4, 5, 6, 7", "1, 2, 3, 4, 5, 6", "2 到 8 之間 8 個數字"]}
       ans={1} explain="從 2 開始,到 8 之前(不含 8)→ 2, 3, 4, 5, 6, 7,共 6 個。"/>
@@ -186,6 +188,8 @@ while countdown > 0:
 
 print("🚀 發射！")`}/>
     </div>
+
+    <Practice items={["寫倒數計時器:從 5 數到 0,每數一次也印「滴!」。", "累加 1+2+3+... 一直加,直到超過 1000 為止,印加到哪個數。", "寫個「按 q 才離開」的迴圈,其他輸入就重複問。"]}/>
 
     <Quiz q="for 跟 while 最大的差別?"
       opts={[
@@ -280,6 +284,8 @@ shopping.remove("巧克力")
 print("沒有巧克力了:", shopping)`}/>
     </div>
 
+    <Practice items={["造你最愛的 5 樣食物 list,用 for 印「第 N 名:XXX」。", "寫個程式找出 list 裡的最大值、最小值跟總和(用迴圈,不要用 max/min/sum)。", "把一個 list 反轉成新的 list(不要用 reversed,自己用 for + append)。"]}/>
+
     <Quiz q={`nums = [10, 20, 30]  →  print(nums[-1]) 印出?`}
       opts={["10", "20", "30", "錯誤"]}
       ans={2} explain="負索引從尾巴算:-1 是最後一個 → 30。"/>
@@ -363,6 +369,8 @@ for name in scores:
 print(f"第一名: {top} ({top_score} 分) 🏆")`}/>
     </div>
 
+    <Practice items={["寫個英中對照辭典 dict,用 input 查詢,找不到就回「沒這個字」。", "統計一句話裡每個字母出現幾次(dict 累加)。", "寫個班級分數 dict,印出每個人分數+全班平均+第一名是誰。"]}/>
+
     <Quiz q="dict 用什麼來找 value?"
       opts={["位置編號", "key", "迴圈", "亂數"]}
       ans={1} explain="dict 是 key→value 的對應,用 key 來查。list 才是用位置編號。"/>
@@ -445,6 +453,8 @@ print(f"BMI = {b:.2f}")         # :.2f = 小數兩位
 print(f"狀態: {comment(b)}")`}/>
     </div>
 
+    <Practice items={["寫 area(width, height) 算長方形面積,測幾組數字。", "寫 is_even(n) 判斷偶數,回傳 True/False。", "寫 greet(name, lang=\"zh\"),lang=\"zh\" 印「你好,XXX」,lang=\"en\" 印「Hello, XXX」。"]}/>
+
     <Quiz q="return 跟 print 的差別?"
       opts={[
         "完全一樣",
@@ -520,6 +530,8 @@ try:
 except ValueError:
     print(f"⚠️ '{text2}' 不是有效的整數")`}/>
     </div>
+
+    <Practice items={["寫 safe_int(text) 函式,能轉成功就回整數,失敗就回 0。", "寫 divide(a, b),除以 0 時不要當掉,印「不能除以 0」並回 None。", "寫個程式不斷問數字,輸入非數字才停止(用 while + try)。"]}/>
 
     <Quiz q="try/except 主要的用途是?"
       opts={[
@@ -609,6 +621,8 @@ print("2^10 =", math.pow(2, 10))
 print("ceil(3.2) =", math.ceil(3.2))    # 無條件進位
 print("floor(3.8) =", math.floor(3.8))  # 無條件捨去`}/>
     </div>
+
+    <Practice items={["用 random.randint 寫剪刀石頭布:玩家手動、電腦隨機,判勝負。", "用 math 算圓的面積:問 radius,印出 π*r²(math.pi)。", "用 random.sample 從一份 10 人名單抽 3 個出來。"]}/>
 
     <Quiz q="想用 random 工具,要先做什麼?"
       opts={["什麼都不用", "import random", "include random", "load random"]}
@@ -717,6 +731,8 @@ for i in range(8):
     petal()
     t.right(45)`}/>
     </div>
+
+    <Practice items={["寫 polygon(sides, length) 函式畫任意邊形,呼叫 3 次畫三角、五角、八角。", "用 t.penup/pendown + t.goto 在不同位置畫 3 個小圖。", "畫一棵簡單的樹:垂直線當樹幹,上面接一個三角形樹冠。"]}/>
 
     <div className="block tip">
       <h2>💡 換你發揮!</h2>

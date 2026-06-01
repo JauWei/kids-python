@@ -1,0 +1,29 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Node (if user later adds tooling)
+node_modules/
+dist/
+
+# Logs
+*.log
+
+# Secrets (just in case)
+.env
+.env.local
+*.key

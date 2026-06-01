@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python 速查表 · Kids Python Academy</title>
+<link rel="icon" href="assets/logo.svg">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&family=Inter:wght@500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #2d2a4a;
+    --soft: #6b7280;
+    --line: #e5e7eb;
+    --indigo: #6366f1;
+    --violet: #8b5cf6;
+    --bg: #fff9f0;
+    --card: #ffffff;
+    --code-bg: #1e293b;
+    --code-fg: #e2e8f0;
+    --kw: #f472b6;
+    --str: #86efac;
+    --num: #fbbf24;
+    --cmt: #64748b;
+    --font: 'Noto Sans TC', 'Microsoft JhengHei', system-ui, sans-serif;
+    --mono: 'Fira Code', 'Consolas', 'Menlo', monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; font-family: var(--font); color: var(--ink); background: var(--bg);
+    background-image:
+      radial-gradient(circle at 90% 0%, rgba(179,157,255,.18) 0%, transparent 40%),
+      radial-gradient(circle at 0% 100%, rgba(122,184,255,.18) 0%, transparent 40%);
+  }
+  .shell { max-width: 1280px; margin: 0 auto; padding: 24px 24px 64px; }
+  header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .brand img { width: 36px; height: 36px; }
+  .brand b { font-size: 18px; font-weight: 800; }
+  .back-link { padding: 8px 14px; border: 1.5px solid var(--line); border-radius: 10px; text-decoration: none;
+    background: white; color: var(--indigo); font-weight: 700; font-size: 14px; }
+  .hero { background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 50%, #fef3c7 100%);
+    border-radius: 20px; padding: 32px; margin-bottom: 24px; }
+  .hero h1 { margin: 0 0 8px; font-size: 38px; font-weight: 800; letter-spacing: -0.01em; }
+  .hero p { margin: 0; font-size: 16px; color: var(--soft); line-height: 1.7; }
+  .toc { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .toc a { padding: 4px 10px; background: white; border-radius: 999px; font-size: 12px; font-weight: 600;
+    color: var(--indigo); text-decoration: none; border: 1px solid var(--line); }
+  .toc a:hover { background: var(--indigo); color: white; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 16px; }
+  .card { background: var(--card); border-radius: 16px; padding: 18px; border: 1px solid var(--line);
+    box-shadow: 0 4px 12px rgba(99,102,241,.05); scroll-margin-top: 16px; }
+  .card h2 { margin: 0 0 4px; font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+  .card .en { font-size: 11px; font-weight: 500; color: var(--soft); font-family: var(--mono); }
+  .card p.desc { margin: 4px 0 10px; font-size: 13px; color: var(--soft); line-height: 1.6; }
+  pre { background: var(--code-bg); color: var(--code-fg); margin: 6px 0; padding: 10px 12px;
+    border-radius: 8px; font-family: var(--mono); font-size: 12.5px; line-height: 1.55;
+    overflow-x: auto; white-space: pre; }
+  pre .kw { color: var(--kw); }
+  pre .str { color: var(--str); }
+  pre .num { color: var(--num); }
+  pre .cmt { color: var(--cmt); font-style: italic; }
+  .note { font-size: 12px; color: var(--soft); margin: 6px 0 0; line-height: 1.6;
+    background: #fff7e0; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #fbbf24; }
+  @media (max-width: 720px) {
+    .shell { padding: 16px 12px 48px; }
+    .hero { padding: 24px 20px; }
+    .hero h1 { font-size: 28px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header>
+    <a class="brand" href="index.html">
+      <img src="assets/logo.svg" alt="">
+      <b>Kids Python Academy</b>
+    </a>
+    <a class="back-link" href="index.html">← 回課程</a>
+  </header>
+
+  <section class="hero">
+    <h1>📑 Python 速查表</h1>
+    <p>20 章學過的語法一頁打包,寫程式卡關時翻一翻找指令。每張卡片有迷你範例,直接抄回 playground 改一改就能跑。</p>
+    <div class="toc">
+      <a href="#print">print</a>
+      <a href="#var">變數</a>
+      <a href="#type">型別</a>
+      <a href="#math">運算</a>
+      <a href="#str">字串</a>
+      <a href="#fstr">f-string</a>
+      <a href="#input">input</a>
+      <a href="#if">if/else</a>
+      <a href="#cmp">比較邏輯</a>
+      <a href="#for">for+range</a>
+      <a href="#while">while</a>
+      <a href="#list">list</a>
+      <a href="#dict">dict</a>
+      <a href="#fn">函式</a>
+      <a href="#try">try/except</a>
+      <a href="#class">class</a>
+      <a href="#mod">import</a>
+      <a href="#file">檔案</a>
+      <a href="#builtin">內建函式</a>
+    </div>
+  </section>
+
+  <div class="grid">
+
+    <article class="card" id="print">
+      <h2>💬 print <span class="en">print()</span></h2>
+      <p class="desc">把括號裡的東西顯示出來。多個參數用逗號分隔。</p>
+<pre><span class="kw">print</span>(<span class="str">"Hello"</span>)
+<span class="kw">print</span>(<span class="str">"name="</span>, <span class="str">"小明"</span>, <span class="num">8</span>)
+<span class="kw">print</span>(<span class="num">1</span> + <span class="num">2</span>)              <span class="cmt"># 3</span>
+<span class="kw">print</span>(<span class="str">"A"</span>, end=<span class="str">""</span>)        <span class="cmt"># 不換行</span></pre>
+    </article>
+
+    <article class="card" id="var">
+      <h2>📦 變數 <span class="en">Variables</span></h2>
+      <p class="desc">用 <code>=</code> 把右邊塞進左邊的「盒子」。名字要英文/底線開頭。</p>
+<pre>name = <span class="str">"小華"</span>
+age = <span class="num">13</span>
+height = <span class="num">1.65</span>
+is_student = <span class="kw">True</span>
+score = score + <span class="num">10</span>      <span class="cmt"># 累加</span></pre>
+    </article>
+
+    <article class="card" id="type">
+      <h2>🏷️ 型別 <span class="en">Data Types</span></h2>
+      <p class="desc">四大基本型別 + 轉換函式。</p>
+<pre><span class="kw">type</span>(<span class="num">7</span>)        <span class="cmt"># &lt;class 'int'&gt;</span>
+<span class="kw">type</span>(<span class="num">3.14</span>)     <span class="cmt"># float</span>
+<span class="kw">type</span>(<span class="str">"hi"</span>)     <span class="cmt"># str</span>
+<span class="kw">type</span>(<span class="kw">True</span>)     <span class="cmt"># bool</span>
+
+<span class="kw">int</span>(<span class="str">"5"</span>)       <span class="cmt"># 字串轉整數 → 5</span>
+<span class="kw">float</span>(<span class="str">"3.14"</span>)  <span class="cmt"># → 3.14</span>
+<span class="kw">str</span>(<span class="num">100</span>)      <span class="cmt"># → "100"</span></pre>
+    </article>
+
+    <article class="card" id="math">
+      <h2>🧮 數字運算 <span class="en">Math</span></h2>
+<pre><span class="num">5</span> + <span class="num">3</span>     <span class="cmt"># 8   加</span>
+<span class="num">5</span> - <span class="num">3</span>     <span class="cmt"># 2   減</span>
+<span class="num">5</span> * <span class="num">3</span>     <span class="cmt"># 15  乘</span>
+<span class="num">10</span> / <span class="num">3</span>    <span class="cmt"># 3.33...  除</span>
+<span class="num">10</span> // <span class="num">3</span>   <span class="cmt"># 3   整數除(商)</span>
+<span class="num">10</span> % <span class="num">3</span>    <span class="cmt"># 1   餘數</span>
+<span class="num">2</span> ** <span class="num">5</span>    <span class="cmt"># 32  次方</span></pre>
+      <p class="note">⚠️ 先乘除後加減,括號優先。</p>
+    </article>
+
+    <article class="card" id="str">
+      <h2>🔤 字串 <span class="en">Strings</span></h2>
+<pre>s = <span class="str">"Hello Python"</span>
+<span class="kw">len</span>(s)               <span class="cmt"># 12</span>
+s.upper()            <span class="cmt"># HELLO PYTHON</span>
+s.lower()            <span class="cmt"># hello python</span>
+s.replace(<span class="str">"H"</span>, <span class="str">"J"</span>)  <span class="cmt"># Jello Python</span>
+s.strip()            <span class="cmt"># 去掉前後空白</span>
+s.split(<span class="str">" "</span>)        <span class="cmt"># ['Hello', 'Python']</span>
+<span class="str">"Py"</span> <span class="kw">in</span> s          <span class="cmt"># True</span>
+<span class="str">"-"</span> * <span class="num">10</span>            <span class="cmt"># "----------"</span></pre>
+    </article>
+
+    <article class="card" id="fstr">
+      <h2>✨ f-string <span class="en">Formatted</span></h2>
+      <p class="desc">字串前加 <code>f</code>,大括號裡可放變數或算式。</p>
+<pre>name = <span class="str">"小華"</span>
+age = <span class="num">13</span>
+<span class="kw">print</span>(<span class="str">f"我叫 {name}, {age} 歲"</span>)
+<span class="kw">print</span>(<span class="str">f"明年 {age + 1} 歲"</span>)
+<span class="kw">print</span>(<span class="str">f"{3.14159:.2f}"</span>)  <span class="cmt"># 3.14 (小數兩位)</span></pre>
+    </article>
+
+    <article class="card" id="input">
+      <h2>⌨️ input <span class="en">User Input</span></h2>
+      <p class="desc">向使用者問問題,<strong>永遠回傳字串</strong>。要數字得包 <code>int()</code> / <code>float()</code>。</p>
+<pre>name = <span class="kw">input</span>(<span class="str">"你叫什麼？ "</span>)
+age = <span class="kw">int</span>(<span class="kw">input</span>(<span class="str">"幾歲？ "</span>))
+height = <span class="kw">float</span>(<span class="kw">input</span>(<span class="str">"身高 m？ "</span>))</pre>
+    </article>
+
+    <article class="card" id="if">
+      <h2>🤔 if / elif / else</h2>
+<pre><span class="kw">if</span> score &gt;= <span class="num">90</span>:
+    <span class="kw">print</span>(<span class="str">"優"</span>)
+<span class="kw">elif</span> score &gt;= <span class="num">60</span>:
+    <span class="kw">print</span>(<span class="str">"及格"</span>)
+<span class="kw">else</span>:
+    <span class="kw">print</span>(<span class="str">"再加油"</span>)</pre>
+      <p class="note">記得加冒號 <code>:</code> 跟 4 個空格縮排。</p>
+    </article>
+
+    <article class="card" id="cmp">
+      <h2>🔀 比較 + 邏輯</h2>
+<pre><span class="cmt"># 比較</span>
+==  !=  &gt;  &lt;  &gt;=  &lt;=
+
+<span class="cmt"># 邏輯</span>
+<span class="kw">and</span>   <span class="cmt"># 兩個都對</span>
+<span class="kw">or</span>    <span class="cmt"># 至少一個對</span>
+<span class="kw">not</span>   <span class="cmt"># 反過來</span>
+
+<span class="kw">if</span> <span class="num">13</span> &lt;= age &lt;= <span class="num">18</span>:    <span class="cmt"># 範圍</span>
+    <span class="kw">print</span>(<span class="str">"青少年"</span>)</pre>
+      <p class="note">⚠️ <code>=</code> 是指定,<code>==</code> 才是比較相等!</p>
+    </article>
+
+    <article class="card" id="for">
+      <h2>🔁 for + range</h2>
+<pre><span class="kw">for</span> i <span class="kw">in</span> <span class="kw">range</span>(<span class="num">5</span>):
+    <span class="kw">print</span>(i)         <span class="cmt"># 0,1,2,3,4 (5 個)</span>
+
+<span class="kw">range</span>(<span class="num">2</span>, <span class="num">8</span>)         <span class="cmt"># 2..7</span>
+<span class="kw">range</span>(<span class="num">0</span>, <span class="num">10</span>, <span class="num">2</span>)     <span class="cmt"># 0,2,4,6,8</span>
+<span class="kw">range</span>(<span class="num">10</span>, <span class="num">0</span>, -<span class="num">1</span>)    <span class="cmt"># 10..1 倒數</span>
+
+<span class="kw">list</span>(<span class="kw">range</span>(<span class="num">5</span>))      <span class="cmt"># 攤開看</span></pre>
+      <p class="note">range(N) = N 個數字,從 0 開始 ── 不是「到 N」。</p>
+    </article>
+
+    <article class="card" id="while">
+      <h2>♾️ while</h2>
+<pre>count = <span class="num">0</span>
+<span class="kw">while</span> count &lt; <span class="num">5</span>:
+    <span class="kw">print</span>(count)
+    count = count + <span class="num">1</span>
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    ans = <span class="kw">input</span>()
+    <span class="kw">if</span> ans == <span class="str">"q"</span>:
+        <span class="kw">break</span>        <span class="cmt"># 跳出</span>
+    <span class="kw">if</span> ans == <span class="str">""</span>:
+        <span class="kw">continue</span>     <span class="cmt"># 跳回開頭</span></pre>
+    </article>
+
+    <article class="card" id="list">
+      <h2>📋 list</h2>
+<pre>nums = [<span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>, <span class="num">40</span>]
+nums[<span class="num">0</span>]             <span class="cmt"># 10  (從 0 開始)</span>
+nums[-<span class="num">1</span>]            <span class="cmt"># 40  (尾巴)</span>
+nums[<span class="num">1</span>:<span class="num">3</span>]           <span class="cmt"># [20,30]  切片</span>
+<span class="kw">len</span>(nums)           <span class="cmt"># 4</span>
+
+nums.append(<span class="num">50</span>)     <span class="cmt"># 加在尾</span>
+nums.remove(<span class="num">20</span>)     <span class="cmt"># 移除值</span>
+nums.insert(<span class="num">1</span>, <span class="num">99</span>)  <span class="cmt"># 插入到位置</span>
+<span class="num">30</span> <span class="kw">in</span> nums          <span class="cmt"># True</span>
+
+<span class="kw">for</span> n <span class="kw">in</span> nums:
+    <span class="kw">print</span>(n)</pre>
+    </article>
+
+    <article class="card" id="dict">
+      <h2>📓 dict</h2>
+<pre>d = {<span class="str">"name"</span>: <span class="str">"小華"</span>, <span class="str">"age"</span>: <span class="num">13</span>}
+
+d[<span class="str">"name"</span>]              <span class="cmt"># "小華"</span>
+d[<span class="str">"age"</span>] = <span class="num">14</span>          <span class="cmt"># 改</span>
+d[<span class="str">"hobby"</span>] = <span class="str">"打球"</span>     <span class="cmt"># 新增</span>
+<span class="str">"name"</span> <span class="kw">in</span> d            <span class="cmt"># True</span>
+<span class="kw">del</span> d[<span class="str">"age"</span>]             <span class="cmt"># 刪</span>
+
+<span class="kw">for</span> k <span class="kw">in</span> d:
+    <span class="kw">print</span>(k, d[k])</pre>
+    </article>
+
+    <article class="card" id="fn">
+      <h2>🛠️ 函式 def</h2>
+<pre><span class="kw">def</span> add(a, b):
+    <span class="kw">return</span> a + b
+
+<span class="kw">def</span> greet(name, msg=<span class="str">"嗨"</span>):    <span class="cmt"># 預設值</span>
+    <span class="kw">print</span>(<span class="str">f"{msg}, {name}!"</span>)
+
+result = add(<span class="num">3</span>, <span class="num">5</span>)         <span class="cmt"># 8</span>
+greet(<span class="str">"小明"</span>)              <span class="cmt"># 嗨, 小明!</span>
+greet(<span class="str">"Alex"</span>, <span class="str">"Hello"</span>)     <span class="cmt"># Hello, Alex!</span></pre>
+      <p class="note">return 把值傳回去;print 只是顯示。</p>
+    </article>
+
+    <article class="card" id="try">
+      <h2>🛡️ try / except</h2>
+<pre><span class="kw">try</span>:
+    n = <span class="kw">int</span>(<span class="kw">input</span>(<span class="str">"數字： "</span>))
+    <span class="kw">print</span>(<span class="num">10</span> / n)
+<span class="kw">except</span> ValueError:
+    <span class="kw">print</span>(<span class="str">"那不是數字"</span>)
+<span class="kw">except</span> ZeroDivisionError:
+    <span class="kw">print</span>(<span class="str">"不能除以 0"</span>)
+<span class="kw">except</span>:
+    <span class="kw">print</span>(<span class="str">"其他錯誤"</span>)</pre>
+      <p class="note">常見錯誤:ValueError / TypeError / IndexError / KeyError / ZeroDivisionError。</p>
+    </article>
+
+    <article class="card" id="class">
+      <h2>🧬 class</h2>
+<pre><span class="kw">class</span> Dog:
+    <span class="kw">def</span> __init__(self, name, breed):
+        self.name = name
+        self.breed = breed
+
+    <span class="kw">def</span> bark(self):
+        <span class="kw">print</span>(<span class="str">f"{self.name} 汪!"</span>)
+
+d = Dog(<span class="str">"旺旺"</span>, <span class="str">"柴犬"</span>)
+d.bark()
+<span class="kw">print</span>(d.name)
+
+<span class="cmt"># 繼承</span>
+<span class="kw">class</span> Puppy(Dog):
+    <span class="kw">def</span> play(self):
+        <span class="kw">print</span>(<span class="str">"玩球"</span>)</pre>
+    </article>
+
+    <article class="card" id="mod">
+      <h2>🧰 import 模組</h2>
+<pre><span class="kw">import</span> random
+random.randint(<span class="num">1</span>, <span class="num">10</span>)       <span class="cmt"># 1~10</span>
+random.choice([<span class="str">"A"</span>,<span class="str">"B"</span>])    <span class="cmt"># 隨機選一</span>
+random.shuffle(nums)         <span class="cmt"># 洗牌</span>
+
+<span class="kw">import</span> math
+math.sqrt(<span class="num">16</span>)                <span class="cmt"># 4.0</span>
+math.pi                      <span class="cmt"># 3.14159...</span>
+math.ceil(<span class="num">3.2</span>)               <span class="cmt"># 4</span>
+math.floor(<span class="num">3.8</span>)              <span class="cmt"># 3</span>
+
+<span class="kw">from</span> random <span class="kw">import</span> randint
+randint(<span class="num">1</span>, <span class="num">100</span>)</pre>
+    </article>
+
+    <article class="card" id="file">
+      <h2>📁 檔案 I/O</h2>
+<pre><span class="cmt"># 寫入(會覆蓋)</span>
+<span class="kw">with</span> <span class="kw">open</span>(<span class="str">"a.txt"</span>, <span class="str">"w"</span>) <span class="kw">as</span> f:
+    f.write(<span class="str">"hello\n"</span>)
+
+<span class="cmt"># 讀取</span>
+<span class="kw">with</span> <span class="kw">open</span>(<span class="str">"a.txt"</span>, <span class="str">"r"</span>) <span class="kw">as</span> f:
+    content = f.read()
+
+<span class="cmt"># 一行一行</span>
+<span class="kw">with</span> <span class="kw">open</span>(<span class="str">"a.txt"</span>) <span class="kw">as</span> f:
+    <span class="kw">for</span> line <span class="kw">in</span> f:
+        <span class="kw">print</span>(line.strip())
+
+<span class="cmt"># 追加</span>
+<span class="kw">with</span> <span class="kw">open</span>(<span class="str">"a.txt"</span>, <span class="str">"a"</span>) <span class="kw">as</span> f:
+    f.write(<span class="str">"more\n"</span>)</pre>
+    </article>
+
+    <article class="card" id="builtin">
+      <h2>⚡ 常用內建函式</h2>
+<pre><span class="kw">len</span>(x)         <span class="cmt"># 長度</span>
+<span class="kw">abs</span>(-<span class="num">5</span>)        <span class="cmt"># 5  絕對值</span>
+<span class="kw">max</span>(<span class="num">3</span>,<span class="num">7</span>,<span class="num">2</span>)     <span class="cmt"># 7</span>
+<span class="kw">min</span>(<span class="num">3</span>,<span class="num">7</span>,<span class="num">2</span>)     <span class="cmt"># 2</span>
+<span class="kw">sum</span>([<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>])   <span class="cmt"># 6</span>
+<span class="kw">round</span>(<span class="num">3.14</span>, <span class="num">1</span>)  <span class="cmt"># 3.1</span>
+<span class="kw">sorted</span>([<span class="num">3</span>,<span class="num">1</span>,<span class="num">2</span>]) <span class="cmt"># [1,2,3]
+<span class="kw">reversed</span>(lst)  <span class="cmt"># 反過來
+<span class="kw">enumerate</span>(lst) <span class="cmt"># 帶索引
+<span class="kw">zip</span>(a, b)      <span class="cmt"># 兩個並排</span>
+
+<span class="cmt"># enumerate 用法</span>
+<span class="kw">for</span> i, x <span class="kw">in</span> <span class="kw">enumerate</span>(nums):
+    <span class="kw">print</span>(i, x)</pre>
+    </article>
+
+  </div>
+</div>
+</body>
+</html>

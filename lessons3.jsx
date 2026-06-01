@@ -119,6 +119,8 @@ c.meow()   # 來自 Cat`}</pre>
       <p>這個觀念之後寫大型程式或用 pygame 做遊戲時會超常用。</p>
     </div>
 
+    <Practice items={["寫 Book 類別:書名、作者、頁數;加 describe() 印出書本描述。", "寫 Rectangle 類別:寬高;加 area() 跟 perimeter() method。", "寫 Counter 類別:可以 inc() 加一、dec() 減一、reset() 歸零、show() 印出目前值。"]}/>
+
     <Quiz q="__init__ 的作用是?"
       opts={["一般函式", "建構子,造物件時自動跑來初始化", "印 init 訊息", "結束物件用"]}
       ans={1} explain="__init__ 在你寫 Dog('旺旺', '柴犬') 造物件時自動執行,通常拿來設定 self.xxx 初始屬性。"/>
@@ -215,6 +217,8 @@ with open("diary.txt", "r") as f:
       </ul>
       <p>更進階的版本會用 <code>json</code> 模組存「結構化資料」(像 dict 一整個存下來),那是下一階段的學習重點。</p>
     </div>
+
+    <Practice items={["把使用者輸入的 5 樣物品存到 shopping.txt,然後讀回來印出。", "用 \"a\" 模式寫日記:每次執行就追加一行,然後讀全部出來。", "讀一個檔案,計算總共有幾行、幾個非空白字元。"]}/>
 
     <Quiz q={`open("a.txt", "w") 跟 open("a.txt", "a") 差別在?`}
       opts={[
@@ -367,6 +371,8 @@ else:
         <li><strong>三元運算式</strong>:<code>x if 條件 else y</code> ── 一行 if/else</li>
       </ul>
     </div>
+
+    <Practice items={["加「歷史紀錄」:把所有猜過的數字存 list,結束時印出來。", "改成「兩人對戰」── 一人想數字(用 input 偷偷輸入)另一人猜。", "加計分:用越少次猜中分數越高(例如 100 - 次數 × 5)。"]}/>
 
     <div className="bubble-row" style={{ marginTop: 24 }}>
       <div className="bubble-avatar owl"><Owl size={56} mood="teach"/><span className="bubble-avatar-name">Py 老師</span></div>
@@ -587,6 +593,8 @@ print(f"\\n你答對 {score}/{total} 題")
 if score == total:
     print("🏆 滿分！")`}/>
     </div>
+
+    <Practice items={["把剪刀石頭布加「蜥蜴」與「Spock」變成 5 選 1 進階版。", "Hangman 用 ASCII 逐步畫出吊人圖(命越少圖越完整)。", "井字棋加一個 random.choice 簡單 AI 電腦對手(從空格亂選)。"]}/>
 
     <div className="bubble-row" style={{ marginTop: 24 }}>
       <div className="bubble-avatar owl"><Owl size={56} mood="teach"/><span className="bubble-avatar-name">Py 老師</span></div>

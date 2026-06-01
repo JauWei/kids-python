@@ -26,6 +26,8 @@ const Home = ({ go }) => {
     { id: "ch18", n: "18", e: "📁", t: "檔案 I/O",     en: "Files" },
     { id: "ch19", n: "19", e: "🎯", t: "猜數字遊戲",   en: "Guess Game" },
     { id: "ch20", n: "20", e: "🎮", t: "你的遊戲",     en: "Your Game" },
+    { id: "ch21", n: "21", e: "🗺️", t: "文字冒險",     en: "Text Adventure" },
+    { id: "ch22", n: "22", e: "🧮", t: "心算練習機",   en: "Math Trainer" },
   ];
 
   return (
@@ -122,6 +124,8 @@ print("今年", 8, "歲")
 print(5 + 3)`}/>
     </div>
 
+    <Practice items={["用 print 寫 3 行,各印一句你最愛的話。", "用一行 print 印出 1+2+3+4+5 的算式跟答案(用逗號連接)。", "造變數 name 跟 age,用一行 print 把它們一起印出。"]}/>
+
     <Quiz q="print(5 + 3) 會印出什麼?"
       opts={["8", "5+3", `"5+3"`, "錯誤訊息"]}
       ans={0}
@@ -177,6 +181,8 @@ print("我喜歡", hobby)`}/>
         <li>❌ 不能用 Python 保留字:<code>print</code>、<code>if</code>、<code>for</code>...</li>
       </ul>
     </div>
+
+    <Practice items={["造 3 個變數存你最愛的食物、運動、顏色,用一句 print 串起來。", "造 a = 10,接著寫 a = a + 5,再 print(a),猜結果是多少。", "把分數從 80 變成 95,只用一行運算(不能直接寫 score = 95)。"]}/>
 
     <Quiz q="下面哪一行會出錯?"
       opts={[`name = "Amy"`, `2nd = 100`, `my_score = 85`, `_secret = "啊"`]}
@@ -245,6 +251,8 @@ print(type(False))
       <p>之後 Ch6 用 input() 拿使用者輸入時會用到 ── 因為 input() 拿到的都是字串,要算數的話得先轉成數字!</p>
     </div>
 
+    <Practice items={["用 type() 分別看 1、1.0、\"1\"、True 是什麼型別。", "試 int(\"3.14\") 看會發生什麼;改成 float(\"3.14\") 又如何?", "把整數 100 轉成字串,再串接 \"分\" 變成 \"100分\"。"]}/>
+
     <Quiz q="下面哪一個是 float?"
       opts={["100", `"100"`, "100.0", "True"]}
       ans={2} explain="100 是 int,100.0 才是 float(有小數點)。"/>
@@ -311,6 +319,8 @@ print("剩下", change, "元")`}/>
 print((2 + 3) * 4)    # 20 (先算括號)
 print(2 ** 3 ** 2)    # 512 (次方從右算起)`}</pre>
     </div>
+
+    <Practice items={["你有 200 元,巧克力一條 25 元,用 // 跟 % 算可買幾條、剩多少。", "把 365 天換算成 X 週 Y 天(用 // 跟 %)。", "算 2 的 10 次方是多少;再算 9 的平方根(提示:** 0.5)。"]}/>
 
     <Quiz q="17 // 5 等於多少?"
       opts={["3.4", "3", "2", "85"]}
@@ -384,6 +394,8 @@ print(f"大寫名字： {name.upper()}")
 print("=" * 18)`}/>
     </div>
 
+    <Practice items={["把 \"hello world\" 變大寫並印出,長度多少?", "造變數 name 跟 age,用 f-string 印出「你好,XXX!明年你就 X 歲了」。", "用 * 印一條 30 個 = 的分隔線。"]}/>
+
     <Quiz q={`name = "Sam"  →  print(f"Hi, {name}!") 印出?`}
       opts={[`Hi, {name}!`, `Hi, Sam!`, `Hi, name!`, `錯誤`]}
       ans={1} explain="f-string 會把 {name} 換成 name 變數的值,所以印出 Hi, Sam!"/>
@@ -430,6 +442,8 @@ print(f"{a} + {b} = {a + b}")
 print(f"{a} × {b} = {a * b}")
 print(f"{a} ÷ {b} = {a / b}")`}/>
     </div>
+
+    <Practice items={["問使用者身高(m)和體重(kg),印出 BMI(記得轉 float)。", "問使用者今年幾歲,印「再 X 年就成年了」(成年=18)。", "問兩個數字,印出他們的平均(用 / 不是 //)。"]}/>
 
     <Quiz q={`x = input("?")  輸入 5,接下來 print(x * 2) 印出什麼?`}
       opts={["10", "55", "錯誤", "5 5"]}
@@ -508,6 +522,8 @@ else:
       <p style={{ marginTop: 12, fontSize: 13 }}>⚠️ <strong>新手最常錯</strong>:<code>=</code> 是「指定」,<code>==</code> 才是「比較相等」!</p>
     </div>
 
+    <Practice items={["問使用者分數,印「優(90+)」、「甲(80+)」、「乙(70+)」、「丙(60+)」或「丁」。", "問使用者今天星期幾(1-7),印「平日」或「假日」。", "寫個猜大小:設一個答案,問使用者一次,告訴他太大、太小或猜中。"]}/>
+
     <Quiz q="判斷 score 是不是 100,要怎麼寫?"
       opts={[`if score = 100:`, `if score == 100:`, `if score === 100:`, `if score: 100`]}
       ans={1} explain="Python 用 == 比較。一個 = 是把東西放進變數,兩個 == 才是問「相等嗎?」"/>
@@ -573,6 +589,8 @@ else:
 
 # 改改數字、True/False 看看`}/>
     </div>
+
+    <Practice items={["寫程式判斷一個數字是不是「介於 10 跟 20 之間的偶數」。", "問三個科目分數,只要三科都過 60 就印「全部及格」。", "寫閏年判斷:能被 4 整除但不能被 100 整除,或能被 400 整除。"]}/>
 
     <Quiz q="(True or False) and not False 等於?"
       opts={["True", "False", "錯誤", "None"]}
