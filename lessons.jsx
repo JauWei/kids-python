@@ -54,6 +54,7 @@ const Home = ({ go }) => {
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             <button className="btn btn-primary" onClick={() => go("ch1")}>🚀 從第 1 課開始</button>
             <button className="btn btn-ghost" onClick={() => go("ch16")}>🐢 直接玩海龜畫圖</button>
+            <a className="btn btn-ghost" href="computer-components.html" style={{ textDecoration: "none" }}>🖥️ 認識電腦組成</a>
           </div>
         </div>
       </div>

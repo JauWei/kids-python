@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>認識電腦組成 · Kids Python Academy</title>
+<link rel="icon" href="assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #fbfdff;
+    --ink: #172033;
+    --soft: #637083;
+    --line: rgba(38, 85, 122, .16);
+    --cyan: #00a6c8;
+    --blue: #2f6df6;
+    --lime: #4aaa28;
+    --amber: #d48310;
+    --pink: #df2d64;
+    --violet: #7654d6;
+    --card: rgba(255, 255, 255, .82);
+    --shadow: 0 18px 48px rgba(18, 48, 82, .14);
+    --radius: 8px;
+    --font: 'Noto Sans TC', 'Microsoft JhengHei', system-ui, sans-serif;
+    --latin: 'Inter', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    min-height: 100%;
+    font-family: var(--font);
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 18% 6%, rgba(0, 166, 200, .13), transparent 30%),
+      radial-gradient(circle at 92% 16%, rgba(223, 45, 100, .09), transparent 26%),
+      linear-gradient(135deg, #f8fcff 0%, #f3fff9 52%, #fff9f0 100%);
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(23, 32, 51, .045) 1px, transparent 1px) 0 0 / 54px 54px,
+      linear-gradient(0deg, rgba(23, 32, 51, .035) 1px, transparent 1px) 0 0 / 54px 54px;
+    mask-image: linear-gradient(to bottom, black, transparent 82%);
+  }
+
+  button, a { font: inherit; }
+
+  .shell {
+    width: min(1220px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 18px 0 44px;
+  }
+
+  .topbar {
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .brand, .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 42px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 900;
+  }
+
+  .brand { color: var(--ink); }
+  .brand img { width: 34px; height: 34px; }
+
+  .back-link {
+    padding: 9px 13px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.78);
+    color: var(--blue);
+    box-shadow: 0 8px 22px rgba(47, 109, 246, .08);
+  }
+
+  .hero {
+    min-height: 560px;
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: minmax(320px, .78fr) minmax(0, 1.22fr);
+    gap: 22px;
+    align-items: stretch;
+  }
+
+  .hero-copy {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.7));
+    box-shadow: var(--shadow);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-copy::after {
+    content: "";
+    position: absolute;
+    inset: auto -70px -80px auto;
+    width: 260px;
+    height: 260px;
+    border: 34px solid rgba(0, 166, 200, .12);
+    border-radius: 50%;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    color: var(--cyan);
+    font-family: var(--latin);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 0 7px rgba(0,166,200,.12);
+  }
+
+  h1 {
+    margin: 0;
+    max-width: 9ch;
+    font-size: clamp(42px, 6vw, 76px);
+    line-height: .98;
+    font-weight: 900;
+    letter-spacing: 0;
+  }
+
+  .lead {
+    margin: 18px 0 0;
+    max-width: 34em;
+    color: var(--soft);
+    font-size: 18px;
+    line-height: 1.75;
+    font-weight: 500;
+  }
+
+  .mission-strip {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .mission {
+    min-height: 72px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: rgba(255,255,255,.72);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .mission b { font-size: 15px; }
+  .mission span { color: var(--soft); font-size: 12px; margin-top: 4px; }
+
+  .lab {
+    min-width: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: rgba(255,255,255,.74);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .lab-visual {
+    min-height: 386px;
+    position: relative;
+    isolation: isolate;
+    background:
+      linear-gradient(110deg, rgba(10, 18, 33, .58), rgba(10, 18, 33, .05) 52%, rgba(255,255,255,.18)),
+      url("assets/computer-lab-hero.png") center / cover no-repeat;
+  }
+
+  .scanline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 18%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(125, 249, 255, .95), transparent);
+    animation: scan 4.2s linear infinite;
+    z-index: 2;
+  }
+
+  @keyframes scan {
+    0% { transform: translateY(0); opacity: 0; }
+    10%, 88% { opacity: 1; }
+    100% { transform: translateY(270px); opacity: 0; }
+  }
+
+  .hotspots {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+  }
+
+  .hotspot {
+    position: absolute;
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--part-color);
+    color: white;
+    font-family: var(--latin);
+    font-size: 11px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--part-color), transparent 78%), 0 12px 24px rgba(5, 14, 25, .22);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+
+  .hotspot::after {
+    content: "";
+    position: absolute;
+    inset: -13px;
+    border: 1px solid color-mix(in srgb, var(--part-color), transparent 42%);
+    border-radius: 50%;
+    animation: pulse 2.4s ease-out infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(.72); opacity: .9; }
+    100% { transform: scale(1.24); opacity: 0; }
+  }
+
+  .hotspot:hover, .hotspot.active { transform: translateY(-3px) scale(1.06); }
+  .hotspot.active { box-shadow: 0 0 0 10px color-mix(in srgb, var(--part-color), transparent 72%), 0 18px 32px rgba(5, 14, 25, .3); }
+
+  .h-cpu { left: 49%; top: 43%; }
+  .h-ram { left: 37%; top: 35%; }
+  .h-storage { left: 66%; top: 58%; }
+  .h-motherboard { left: 31%; top: 53%; }
+  .h-gpu { left: 53%; top: 63%; }
+  .h-power { left: 72%; top: 32%; }
+
+  .part-console {
+    display: grid;
+    grid-template-columns: 116px minmax(0, 1fr);
+    gap: 16px;
+    align-items: center;
+    padding: 18px;
+    border-top: 1px solid var(--line);
+    background: rgba(255,255,255,.9);
+  }
+
+  .part-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: var(--radius);
+    display: grid;
+    place-items: center;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,.25), transparent),
+      var(--active-color);
+    color: white;
+    font-family: var(--latin);
+    font-size: 24px;
+    font-weight: 900;
+    box-shadow: 0 14px 30px color-mix(in srgb, var(--active-color), transparent 68%);
+  }
+
+  .part-console h2 {
+    margin: 0 0 6px;
+    font-size: 28px;
+    letter-spacing: 0;
+  }
+
+  .part-console p {
+    margin: 0;
+    color: var(--soft);
+    line-height: 1.75;
+    font-size: 16px;
+  }
+
+  .deck {
+    margin-top: 22px;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 22px;
+  }
+
+  .parts-panel, .quiz {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: rgba(255,255,255,.82);
+    box-shadow: var(--shadow);
+    padding: 20px;
+  }
+
+  .section-title {
+    margin: 0 0 14px;
+    font-size: 24px;
+    letter-spacing: 0;
+  }
+
+  .parts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .part-card {
+    min-height: 122px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: rgba(255,255,255,.82);
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    transition: transform .18s ease, border-color .18s ease, background .18s ease;
+  }
+
+  .part-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--card-color);
+    opacity: .8;
+  }
+
+  .part-card:hover, .part-card.active {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--card-color), white 35%);
+    background: white;
+  }
+
+  .part-card strong {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 17px;
+  }
+
+  .part-card span {
+    color: var(--soft);
+    display: block;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .deep-dive {
+    margin-top: 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--active-color), white 88%), rgba(255,255,255,.92));
+    overflow: hidden;
+  }
+
+  .deep-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .deep-head h3 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: 0;
+  }
+
+  .deep-pill {
+    flex: 0 0 auto;
+    border-radius: 999px;
+    background: var(--active-color);
+    color: white;
+    padding: 6px 10px;
+    font-family: var(--latin);
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  .deep-body {
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(320px, 1.1fr);
+    gap: 18px;
+    padding: 16px;
+  }
+
+  .deep-visual {
+    aspect-ratio: 16 / 10;
+    min-height: 0;
+    border: 1px solid rgba(255,255,255,.7);
+    border-radius: var(--radius);
+    background:
+      linear-gradient(135deg, rgba(255,255,255,.9), rgba(239,248,255,.9));
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    position: relative;
+    align-self: start;
+    padding: 10px;
+  }
+
+  .deep-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    border-radius: 6px;
+  }
+
+  .visual-chip {
+    width: min(78%, 320px);
+    aspect-ratio: 1.2;
+    border-radius: 18px;
+    background:
+      linear-gradient(90deg, transparent 45%, rgba(255,255,255,.26) 45% 55%, transparent 55%),
+      linear-gradient(0deg, transparent 45%, rgba(255,255,255,.26) 45% 55%, transparent 55%),
+      var(--active-color);
+    box-shadow: inset 0 0 0 12px rgba(255,255,255,.32), 0 20px 46px color-mix(in srgb, var(--active-color), transparent 62%);
+    position: relative;
+  }
+
+  .visual-chip::before,
+  .visual-chip::after {
+    content: "";
+    position: absolute;
+    inset: 18px;
+    border: 2px solid rgba(255,255,255,.46);
+    border-radius: 12px;
+  }
+
+  .visual-chip::after {
+    inset: auto 28px 28px;
+    height: 12px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255,255,255,.64);
+  }
+
+  .deep-copy {
+    display: grid;
+    gap: 12px;
+  }
+
+  .deep-copy p {
+    margin: 0;
+    color: var(--soft);
+    line-height: 1.8;
+  }
+
+  .fact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .fact {
+    border: 1px solid rgba(38, 85, 122, .13);
+    border-radius: var(--radius);
+    background: rgba(255,255,255,.76);
+    padding: 12px;
+    min-height: 86px;
+  }
+
+  .fact b {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+
+  .fact span {
+    color: var(--soft);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .deep-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 8px;
+  }
+
+  .deep-list li {
+    display: grid;
+    grid-template-columns: 26px 1fr;
+    gap: 8px;
+    align-items: start;
+    color: var(--soft);
+    line-height: 1.7;
+  }
+
+  .deep-list li::before {
+    content: attr(data-step);
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--active-color);
+    color: white;
+    display: grid;
+    place-items: center;
+    font-family: var(--latin);
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  .flow {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .step {
+    min-height: 96px;
+    border-radius: var(--radius);
+    border: 1px solid rgba(0, 166, 200, .18);
+    background: linear-gradient(180deg, rgba(240, 253, 250, .9), rgba(255,255,255,.8));
+    padding: 11px;
+  }
+
+  .step b { display: block; margin-bottom: 8px; font-size: 14px; }
+  .step small { color: var(--soft); line-height: 1.5; }
+
+  .quiz p {
+    margin: 0 0 12px;
+    color: var(--soft);
+    line-height: 1.65;
+  }
+
+  .quiz-options {
+    display: grid;
+    gap: 10px;
+  }
+
+  .quiz-option {
+    min-height: 48px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: white;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+    padding: 10px 12px;
+    font-weight: 800;
+  }
+
+  .quiz-option.correct { border-color: #22c55e; background: #edfff5; color: #166534; }
+  .quiz-option.wrong { border-color: #fb7185; background: #fff1f2; color: #9f1239; }
+
+  .quiz-feedback {
+    min-height: 42px;
+    margin-top: 12px;
+    color: var(--soft);
+    line-height: 1.6;
+  }
+
+  .quiz-next {
+    width: 100%;
+    min-height: 44px;
+    margin-top: 12px;
+    border: 0;
+    border-radius: var(--radius);
+    background: linear-gradient(90deg, var(--cyan), var(--blue));
+    color: white;
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  .ai-section {
+    margin-top: 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: rgba(255,255,255,.82);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .ai-hero {
+    display: grid;
+    grid-template-columns: minmax(320px, .86fr) minmax(0, 1.14fr);
+    gap: 0;
+    min-height: 390px;
+  }
+
+  .ai-copy {
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background:
+      linear-gradient(135deg, rgba(0,166,200,.11), rgba(255,255,255,.84) 44%, rgba(244,170,35,.08));
+  }
+
+  .ai-copy h2 {
+    margin: 0;
+    max-width: 10ch;
+    font-size: clamp(34px, 5vw, 58px);
+    line-height: 1.02;
+    letter-spacing: 0;
+  }
+
+  .ai-copy p {
+    margin: 16px 0 0;
+    color: var(--soft);
+    font-size: 17px;
+    line-height: 1.8;
+  }
+
+  .ai-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .ai-stat {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: rgba(255,255,255,.72);
+    padding: 12px;
+    min-height: 76px;
+  }
+
+  .ai-stat b {
+    display: block;
+    font-size: 20px;
+    font-family: var(--latin);
+  }
+
+  .ai-stat span {
+    display: block;
+    color: var(--soft);
+    font-size: 12px;
+    margin-top: 4px;
+    line-height: 1.45;
+  }
+
+  .ai-visual {
+    min-height: 390px;
+    background:
+      linear-gradient(100deg, rgba(255,255,255,.14), rgba(255,255,255,.02)),
+      url("assets/ai-lab-flow.png") center / contain no-repeat,
+      linear-gradient(135deg, #f8fdff, #eefdf7);
+  }
+
+  .ai-workbench {
+    border-top: 1px solid var(--line);
+    padding: 20px;
+    display: grid;
+    grid-template-columns: minmax(0, .95fr) minmax(320px, 1.05fr);
+    gap: 18px;
+  }
+
+  .ai-cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .ai-card {
+    min-height: 112px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: rgba(255,255,255,.82);
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+    padding: 14px;
+    transition: transform .18s ease, border-color .18s ease, background .18s ease;
+  }
+
+  .ai-card:hover, .ai-card.active {
+    transform: translateY(-3px);
+    border-color: var(--ai-color);
+    background: white;
+  }
+
+  .ai-card strong {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 17px;
+  }
+
+  .ai-card span {
+    display: block;
+    color: var(--soft);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .ai-detail {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--ai-active), white 88%), rgba(255,255,255,.92));
+    padding: 18px;
+  }
+
+  .ai-detail-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .ai-icon {
+    width: 74px;
+    height: 74px;
+    border-radius: var(--radius);
+    display: grid;
+    place-items: center;
+    background: var(--ai-active);
+    color: white;
+    font-size: 28px;
+    font-weight: 900;
+    box-shadow: 0 14px 30px color-mix(in srgb, var(--ai-active), transparent 68%);
+  }
+
+  .ai-detail h3 {
+    margin: 0;
+    font-size: 26px;
+    letter-spacing: 0;
+  }
+
+  .ai-detail p {
+    margin: 0;
+    color: var(--soft);
+    line-height: 1.8;
+  }
+
+  .ai-flow {
+    margin-top: 14px;
+    display: grid;
+    gap: 8px;
+  }
+
+  .ai-flow div {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    gap: 9px;
+    align-items: start;
+    color: var(--soft);
+    line-height: 1.65;
+  }
+
+  .ai-flow b {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--ai-active);
+    color: white;
+    font-family: var(--latin);
+    font-size: 13px;
+  }
+
+  @media (max-width: 980px) {
+    .hero, .deck, .ai-hero, .ai-workbench { grid-template-columns: 1fr; }
+    .hero-copy { min-height: 420px; }
+    h1 { max-width: 12ch; }
+    .deep-body { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 720px) {
+    .shell { width: min(100% - 20px, 1220px); padding-top: 10px; }
+    .topbar { align-items: flex-start; flex-direction: column; }
+    .hero { min-height: auto; }
+    .hero-copy { padding: 22px; min-height: 390px; }
+    .mission-strip, .parts-grid, .flow, .fact-grid, .ai-stats, .ai-cards { grid-template-columns: 1fr; }
+    .lab-visual { min-height: 330px; background-position: 55% center; }
+    .hotspot { width: 40px; height: 40px; font-size: 10px; }
+    .h-cpu { left: 45%; top: 45%; }
+    .h-ram { left: 29%; top: 38%; }
+    .h-storage { left: 63%; top: 62%; }
+    .h-motherboard { left: 24%; top: 56%; }
+    .h-gpu { left: 48%; top: 68%; }
+    .h-power { left: 70%; top: 35%; }
+    .part-console { grid-template-columns: 1fr; }
+    .part-icon { width: 78px; height: 78px; font-size: 20px; }
+    .part-console h2 { font-size: 23px; }
+    .deep-head { align-items: flex-start; flex-direction: column; }
+    .deep-visual { aspect-ratio: 4 / 3; }
+    .ai-copy { padding: 22px; }
+    .ai-copy h2 { max-width: 12ch; }
+    .ai-visual { min-height: 260px; }
+    .ai-detail-top { align-items: flex-start; flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <a class="brand" href="index.html">
+      <img src="assets/logo.svg" alt="">
+      <span>Kids Python Academy</span>
+    </a>
+    <a class="back-link" href="index.html">← 回到 Python 課程</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div>
+          <div class="eyebrow">Hardware Lab</div>
+          <h1>打開電腦看裡面</h1>
+          <p class="lead">每台電腦都像一座小型城市。CPU 決定下一步，RAM 暫時放資料，SSD 保存檔案，GPU 把畫面變漂亮，主機板把所有零件串在一起。</p>
+        </div>
+        <div class="mission-strip" aria-label="學習重點">
+          <div class="mission"><b>找到核心零件</b><span>點選主視覺上的發光節點</span></div>
+          <div class="mission"><b>理解資料流</b><span>從輸入、計算到輸出</span></div>
+          <div class="mission"><b>建立硬體語感</b><span>用生活比喻記住功能</span></div>
+          <div class="mission"><b>完成小測驗</b><span>立刻確認自己懂了沒</span></div>
+        </div>
+      </div>
+
+      <div class="lab">
+        <div class="lab-visual" aria-label="電腦內部實驗室主視覺">
+          <div class="scanline"></div>
+          <div class="hotspots">
+            <button class="hotspot h-cpu active" data-part="cpu" style="--part-color: var(--blue)" title="CPU">CPU</button>
+            <button class="hotspot h-ram" data-part="ram" style="--part-color: var(--lime)" title="RAM">RAM</button>
+            <button class="hotspot h-storage" data-part="storage" style="--part-color: var(--amber)" title="SSD">SSD</button>
+            <button class="hotspot h-motherboard" data-part="motherboard" style="--part-color: var(--cyan)" title="主機板">板</button>
+            <button class="hotspot h-gpu" data-part="gpu" style="--part-color: var(--violet)" title="GPU">GPU</button>
+            <button class="hotspot h-power" data-part="power" style="--part-color: var(--pink)" title="電源">電</button>
+          </div>
+        </div>
+
+        <div class="part-console" id="detail" style="--active-color: var(--blue)">
+          <div class="part-icon" id="detailIcon">CPU</div>
+          <div>
+            <h2 id="detailTitle">CPU 中央處理器</h2>
+            <p id="detailText">像電腦的大腦，負責執行指令、做計算，並協調其他零件一起工作。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="deck">
+      <div class="parts-panel">
+        <h2 class="section-title">零件控制台</h2>
+        <div class="parts-grid" aria-label="主要零件清單">
+          <button class="part-card active" data-part="cpu" style="--card-color: var(--blue)"><strong>CPU 中央處理器</strong><span>處理程式指令，是速度與反應的重要來源。</span></button>
+          <button class="part-card" data-part="ram" style="--card-color: var(--lime)"><strong>RAM 記憶體</strong><span>暫時放正在使用的資料，關機後內容會消失。</span></button>
+          <button class="part-card" data-part="storage" style="--card-color: var(--amber)"><strong>SSD / HDD 儲存</strong><span>長期保存系統、照片、文件和遊戲。</span></button>
+          <button class="part-card" data-part="motherboard" style="--card-color: var(--cyan)"><strong>主機板</strong><span>讓所有零件插在一起，像電腦裡的道路系統。</span></button>
+          <button class="part-card" data-part="gpu" style="--card-color: var(--violet)"><strong>GPU 顯示卡</strong><span>負責大量圖像運算，讓遊戲、影片和 3D 畫面更順。</span></button>
+          <button class="part-card" data-part="power" style="--card-color: var(--pink)"><strong>電源供應器</strong><span>把插座的電轉成各零件能使用的電力。</span></button>
+        </div>
+
+        <article class="deep-dive" id="deepDive" style="--active-color: var(--blue)">
+          <div class="deep-head">
+            <h3 id="deepTitle">CPU 深入認識</h3>
+            <span class="deep-pill" id="deepPill">Central Processing Unit</span>
+          </div>
+          <div class="deep-body">
+            <div class="deep-visual" id="deepVisual"></div>
+            <div class="deep-copy">
+              <p id="deepIntro"></p>
+              <div class="fact-grid" id="factGrid"></div>
+              <ul class="deep-list" id="deepList"></ul>
+            </div>
+          </div>
+        </article>
+
+        <h2 class="section-title" style="margin-top: 22px;">一個按鍵如何變成畫面</h2>
+        <div class="flow">
+          <div class="step"><b>1. 輸入</b><small>鍵盤、滑鼠或觸控板送出訊號。</small></div>
+          <div class="step"><b>2. 暫存</b><small>RAM 放著程式正在需要的資料。</small></div>
+          <div class="step"><b>3. 計算</b><small>CPU 判斷下一步要做什麼。</small></div>
+          <div class="step"><b>4. 圖像</b><small>GPU 準備要顯示的畫面。</small></div>
+          <div class="step"><b>5. 輸出</b><small>螢幕、喇叭或印表機呈現結果。</small></div>
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h2 class="section-title">小測驗</h2>
+        <p id="quizQuestion">哪一個零件像電腦的大腦？</p>
+        <div class="quiz-options" id="quizOptions"></div>
+        <div class="quiz-feedback" id="quizFeedback"></div>
+        <button class="quiz-next" id="quizNext">下一題</button>
+      </div>
+    </section>
+
+    <section class="ai-section" aria-label="AI 原理與組成">
+      <div class="ai-hero">
+        <div class="ai-copy">
+          <div>
+            <div class="eyebrow">AI Lab</div>
+            <h2>AI 是怎麼學會的</h2>
+            <p>AI 不是突然變聰明，而是靠資料、模型、訓練方法和大量運算一步一步學出規律。它看到新的問題時，會用已學到的模式推測最可能的答案。</p>
+          </div>
+          <div class="ai-stats" aria-label="AI 三個核心概念">
+            <div class="ai-stat"><b>Data</b><span>讓 AI 有例子可以觀察</span></div>
+            <div class="ai-stat"><b>Model</b><span>保存學到的規律與參數</span></div>
+            <div class="ai-stat"><b>Compute</b><span>提供訓練與推論的算力</span></div>
+          </div>
+        </div>
+        <div class="ai-visual" role="img" aria-label="資料進入神經網路並產生輸出結果的 AI 流程圖"></div>
+      </div>
+
+      <div class="ai-workbench">
+        <div>
+          <h2 class="section-title">AI 組成控制台</h2>
+          <div class="ai-cards">
+            <button class="ai-card active" data-ai="data" style="--ai-color: var(--cyan)"><strong>資料 Data</strong><span>AI 學習用的範例，像課本、圖片、聲音或感測器紀錄。</span></button>
+            <button class="ai-card" data-ai="model" style="--ai-color: var(--blue)"><strong>模型 Model</strong><span>把學到的規律存在大量參數裡，是 AI 的核心。</span></button>
+            <button class="ai-card" data-ai="training" style="--ai-color: var(--lime)"><strong>訓練 Training</strong><span>讓模型反覆練習、比較答案、修正參數。</span></button>
+            <button class="ai-card" data-ai="inference" style="--ai-color: var(--amber)"><strong>推論 Inference</strong><span>訓練完成後，AI 用學到的規律回答新問題。</span></button>
+            <button class="ai-card" data-ai="network" style="--ai-color: var(--violet)"><strong>神經網路</strong><span>由很多節點和連線組成，能把簡單特徵組合成複雜理解。</span></button>
+            <button class="ai-card" data-ai="compute" style="--ai-color: var(--pink)"><strong>算力 Compute</strong><span>GPU、記憶體和伺服器讓大型 AI 可以大量計算。</span></button>
+          </div>
+        </div>
+
+        <article class="ai-detail" id="aiDetail" style="--ai-active: var(--cyan)">
+          <div class="ai-detail-top">
+            <div class="ai-icon" id="aiIcon">D</div>
+            <div>
+              <h3 id="aiTitle">資料 Data</h3>
+              <p id="aiText">資料是 AI 的學習材料。資料品質越清楚、越有代表性，AI 越容易學到有用規律。</p>
+            </div>
+          </div>
+          <div class="ai-flow" id="aiFlow"></div>
+        </article>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  const parts = {
+    cpu: {
+      title: 'CPU 中央處理器',
+      fullName: 'Central Processing Unit',
+      icon: 'CPU',
+      color: '#2f6df6',
+      text: '像電腦的大腦，負責執行指令、做計算，並協調其他零件一起工作。',
+      intro: 'CPU 的全名是中央處理器 Central Processing Unit，英文縮寫為 CPU。它是電腦的核心裝置，常被比喻成大腦。程式執行時，CPU 會反覆進行「提取指令、解碼、執行、寫回結果」這個循環，讓電腦能一步一步完成任務。',
+      image: 'assets/cpu-wafer-process.png',
+      facts: [
+        ['材料從哪來', 'CPU 晶片主要來自高純度單晶矽。矽會先被長成圓柱狀晶錠，再切成薄薄的圓形晶圓。'],
+        ['為什麼晶圓是圓的', '因為晶圓來自圓柱狀矽晶錠；圓形也有利於旋轉塗佈、均勻受熱與提升製程良率。'],
+        ['晶片怎麼做出來', '晶圓會經過微影、蝕刻、沉積與研磨等製程，在上面做出數百億個電晶體與金屬導線。'],
+        ['一片晶圓有多少晶片', '主流晶圓常見為 12 吋，也就是 300 毫米。晶片越小，一片晶圓通常能切出越多顆。']
+      ],
+      steps: [
+        '長晶：把矽礦石提煉成電子級矽，加熱融化後用籽晶拉出高純度單晶矽晶柱。',
+        '切割與拋光：把矽晶柱切成極薄圓片，再研磨拋光成平整的矽晶圓。',
+        '前段製程 FEOL：用 EUV 等微影技術建構電晶體，像是在晶圓上種下大量開關。',
+        '後段製程 BEOL：用金屬導線把電晶體連成邏輯網路，形成可以計算的電路。',
+        '切割與封裝：晶圓被切成一顆顆方形晶片，再封裝成電腦和手機裡使用的處理器。製造過程有上千道工序，良率非常重要。'
+      ]
+    },
+    ram: {
+      title: 'RAM 記憶體',
+      fullName: 'Random Access Memory',
+      icon: 'RAM',
+      color: '#4aaa28',
+      text: '像桌面上的工作區，程式正在使用的資料會先放在這裡，讓電腦能快速拿到。',
+      intro: 'RAM 的全名是 Random Access Memory，中文常叫隨機存取記憶體。它的速度很快，專門存放「現在正在使用」的資料，例如瀏覽器分頁、遊戲地圖、Python 程式執行中的變數。',
+      image: 'assets/ram-real.png',
+      facts: [
+        ['像書桌不是書櫃', '書桌越大，同時攤開的課本和作業越多；RAM 越大，同時開多個程式越不容易卡住。'],
+        ['關機會清空', 'RAM 是暫存空間，斷電後內容會消失，所以文件要存到 SSD/HDD 才能長期保留。'],
+        ['容量與速度都重要', '容量影響能同時放多少資料，速度則影響 CPU 取資料時等多久。'],
+        ['常見單位', '現在個人電腦常見 8GB、16GB、32GB 或更高容量。']
+      ],
+      steps: [
+        '程式被打開後，常用資料會從儲存裝置載入 RAM。',
+        'CPU 需要資料時，會優先從 RAM 快速讀取。',
+        '使用者修改資料時，結果會暫時放在 RAM。',
+        '按下儲存後，資料才會寫回 SSD/HDD。',
+        '關機或重新開機時，RAM 內容會被清空。'
+      ]
+    },
+    storage: {
+      title: 'SSD / HDD 儲存裝置',
+      fullName: 'Solid State Drive / Hard Disk Drive',
+      icon: 'SSD',
+      color: '#d48310',
+      text: '像書櫃或背包，負責長期保存作業系統、照片、影片、文件和遊戲。',
+      intro: '儲存裝置負責長期保存資料。SSD 使用快閃記憶體，速度快、安靜、抗震；HDD 使用旋轉磁碟和讀寫頭，容量大、價格通常較低。作業系統、照片、影片、遊戲和作業檔案都放在這裡。',
+      image: 'assets/storage-real.png',
+      facts: [
+        ['SSD 比較像電子筆記本', '沒有旋轉碟片，讀寫速度快，開機和載入程式通常更迅速。'],
+        ['HDD 比較像倉庫', '容量可以很大，適合保存大量照片、影片和備份資料。'],
+        ['資料會留下來', '和 RAM 不同，關機後 SSD/HDD 裡的資料仍會保留。'],
+        ['也需要整理', '重要資料要備份，容量快滿時電腦也可能變慢。']
+      ],
+      steps: [
+        '你按下儲存時，資料會被寫入 SSD/HDD。',
+        '下次開機或打開檔案時，資料會從儲存裝置讀出。',
+        '常用資料會被載入 RAM，讓 CPU 更快使用。',
+        'SSD 透過電子訊號找資料；HDD 則透過磁碟位置讀寫。',
+        '備份可以避免硬碟故障或誤刪造成資料消失。'
+      ]
+    },
+    motherboard: {
+      title: '主機板',
+      fullName: 'Motherboard',
+      icon: '板',
+      color: '#00a6c8',
+      text: '像城市道路和插座，讓 CPU、RAM、顯示卡、儲存裝置和其他零件彼此連接。',
+      intro: '主機板是電腦裡最大的電路板之一。CPU、RAM、顯示卡、SSD、USB、網路與聲音晶片都會直接或間接接到主機板上。它不像 CPU 負責大量計算，但它決定零件能不能互相溝通。',
+      image: 'assets/motherboard-real.png',
+      facts: [
+        ['像城市道路', '資料會沿著主機板上的電路線和匯流排移動，就像車子在道路上移動。'],
+        ['插槽很重要', 'CPU 插槽、RAM 插槽、PCIe 插槽和 M.2 插槽會決定能裝哪些零件。'],
+        ['晶片組像交通中心', '晶片組協助管理 USB、儲存、網路等不同設備的資料流。'],
+        ['尺寸有不同', '常見主機板尺寸包含 ATX、Micro-ATX、Mini-ITX。']
+      ],
+      steps: [
+        '電源供應器把電送到主機板。',
+        '主機板把電力分配給 CPU、RAM、SSD 和擴充卡。',
+        'CPU 透過主機板和 RAM、儲存裝置交換資料。',
+        '顯示卡、網路卡和 USB 裝置也透過主機板傳送訊號。',
+        '如果主機板規格不相容，零件可能裝不上或不能正常運作。'
+      ]
+    },
+    gpu: {
+      title: 'GPU 顯示卡',
+      fullName: 'Graphics Processing Unit',
+      icon: 'GPU',
+      color: '#7654d6',
+      text: '擅長處理很多圖像與平行運算，遊戲、影片剪輯、3D 和 AI 都常需要它幫忙。',
+      intro: 'GPU 的全名是 Graphics Processing Unit，中文常叫圖形處理器。它很擅長同時處理大量相似的小任務，所以除了顯示遊戲畫面，也常用在 3D、影片剪輯、科學運算和 AI 訓練。',
+      image: 'assets/gpu-real.png',
+      facts: [
+        ['像畫面工廠', 'GPU 可以同時處理大量像素、光影、材質與動畫。'],
+        ['核心很多', 'GPU 通常有大量運算核心，適合平行運算。'],
+        ['有自己的記憶體', '獨立顯示卡常有 VRAM，用來放貼圖、模型和畫面資料。'],
+        ['不只打遊戲', 'AI、影片特效、建築 3D 和科學模擬也可能用 GPU 加速。']
+      ],
+      steps: [
+        'CPU 告訴 GPU 畫面要呈現哪些物件。',
+        'GPU 計算模型位置、光線、陰影和材質。',
+        'VRAM 暫存貼圖、影格和圖像資料。',
+        'GPU 產生一張張畫面影格。',
+        '螢幕快速顯示影格，我們就看到順暢動畫。'
+      ]
+    },
+    power: {
+      title: '電源供應器',
+      fullName: 'Power Supply Unit',
+      icon: '電',
+      color: '#df2d64',
+      text: '把插座的電轉換成穩定、安全、適合各零件使用的電力。',
+      intro: '電源供應器的英文是 Power Supply Unit，常縮寫為 PSU。它會把牆上插座的交流電轉成電腦零件能使用的直流電，並提供不同電壓給主機板、CPU、顯示卡和儲存裝置。',
+      image: 'assets/psu-real.png',
+      facts: [
+        ['像電力轉換站', '插座的電不能直接餵給 CPU，必須先被 PSU 轉換與穩定。'],
+        ['瓦數要足夠', '高階 CPU 和 GPU 需要更多電力，PSU 瓦數不足可能不穩定。'],
+        ['效率也重要', '常見 80 PLUS 認證代表電源轉換效率等級。'],
+        ['保護零件', '好的 PSU 會有過電壓、過電流、短路等保護設計。']
+      ],
+      steps: [
+        '插座提供交流電進入 PSU。',
+        'PSU 轉換成 12V、5V、3.3V 等直流電。',
+        '電力透過線材送到主機板、CPU、GPU 和硬碟。',
+        '電源保護機制監控異常狀況。',
+        '穩定電力讓整台電腦能長時間安全運作。'
+      ]
+    }
+  };
+
+  const detail = document.getElementById('detail');
+  const detailIcon = document.getElementById('detailIcon');
+  const detailTitle = document.getElementById('detailTitle');
+  const detailText = document.getElementById('detailText');
+  const deepDive = document.getElementById('deepDive');
+  const deepTitle = document.getElementById('deepTitle');
+  const deepPill = document.getElementById('deepPill');
+  const deepVisual = document.getElementById('deepVisual');
+  const deepIntro = document.getElementById('deepIntro');
+  const factGrid = document.getElementById('factGrid');
+  const deepList = document.getElementById('deepList');
+  const partButtons = [...document.querySelectorAll('[data-part]')];
+
+  function showPart(key) {
+    const part = parts[key];
+    detail.style.setProperty('--active-color', part.color);
+    deepDive.style.setProperty('--active-color', part.color);
+    detailIcon.textContent = part.icon;
+    detailTitle.textContent = part.title;
+    detailText.textContent = part.text;
+    deepTitle.textContent = `${part.title} 深入認識`;
+    deepPill.textContent = part.fullName;
+    deepIntro.textContent = part.intro;
+    deepVisual.innerHTML = part.image
+      ? `<img src="${part.image}" alt="${part.title} 圖片示意">`
+      : '<div class="visual-chip" aria-hidden="true"></div>';
+    factGrid.innerHTML = part.facts.map(([label, value]) => (
+      `<div class="fact"><b>${label}</b><span>${value}</span></div>`
+    )).join('');
+    deepList.innerHTML = part.steps.map((value, index) => (
+      `<li data-step="${index + 1}">${value}</li>`
+    )).join('');
+    partButtons.forEach(button => button.classList.toggle('active', button.dataset.part === key));
+  }
+
+  partButtons.forEach(button => {
+    button.addEventListener('click', () => showPart(button.dataset.part));
+  });
+
+  const aiParts = {
+    data: {
+      title: '資料 Data',
+      icon: 'D',
+      color: '#00a6c8',
+      text: '資料是 AI 的學習材料。資料品質越清楚、越有代表性，AI 越容易學到有用規律。',
+      flow: [
+        '資料可以是文字、圖片、聲音、影片、表格或感測器數值。',
+        '資料需要整理：去除錯誤、重複和太偏的例子，必要時也會加上標註。',
+        '如果資料有偏見，AI 也可能學到偏見，所以資料來源和檢查很重要。'
+      ]
+    },
+    model: {
+      title: '模型 Model',
+      icon: 'M',
+      color: '#2f6df6',
+      text: '模型是 AI 的核心。它不是把所有答案背起來，而是把資料中的規律壓縮到大量參數裡。',
+      flow: [
+        '參數可以想成許多可調整的小旋鈕，會影響模型如何判斷。',
+        '模型越大通常能學更複雜的模式，但也需要更多資料、記憶體和算力。',
+        '模型完成訓練後，可以被部署到網站、手機、機器人或伺服器中使用。'
+      ]
+    },
+    training: {
+      title: '訓練 Training',
+      icon: 'T',
+      color: '#4aaa28',
+      text: '訓練就像練習題。模型先猜答案，再和正確答案或目標比較，接著微調參數，讓下次猜得更好。',
+      flow: [
+        '輸入一批資料，模型產生預測。',
+        '用損失函數衡量預測和目標差多少。',
+        '透過反向傳播和最佳化器調整參數，反覆很多次後模型逐漸進步。'
+      ]
+    },
+    inference: {
+      title: '推論 Inference',
+      icon: 'I',
+      color: '#d48310',
+      text: '推論是 AI 實際使用的階段。訓練完成後，使用者給它新問題，模型會根據已學到的規律產生答案。',
+      flow: [
+        '使用者輸入問題、圖片、聲音或其他訊號。',
+        '模型把輸入轉成內部可計算的表示方式。',
+        '模型輸出分類、文字、圖片、建議或控制指令。'
+      ]
+    },
+    network: {
+      title: '神經網路 Neural Network',
+      icon: 'N',
+      color: '#7654d6',
+      text: '神經網路由很多層節點和連線組成。前面的層學簡單特徵，後面的層把特徵組合成更高階的理解。',
+      flow: [
+        '在圖片任務中，前面可能先學到邊緣、顏色和形狀。',
+        '中間層把特徵組合成眼睛、輪子、按鈕等局部物件。',
+        '後面層再判斷整張圖可能是貓、車、主機板或其他東西。'
+      ]
+    },
+    compute: {
+      title: '算力 Compute',
+      icon: 'C',
+      color: '#df2d64',
+      text: 'AI 需要大量矩陣運算。GPU 很擅長同時做很多相似計算，所以常被用來訓練和執行大型 AI。',
+      flow: [
+        '訓練大型模型通常需要多張 GPU、很多記憶體和高速網路。',
+        '推論也需要算力，但可以透過壓縮、量化或快取讓速度更快。',
+        '好的 AI 系統不只靠模型，也需要資料工程、硬體、軟體和安全設計一起配合。'
+      ]
+    }
+  };
+
+  const aiDetail = document.getElementById('aiDetail');
+  const aiIcon = document.getElementById('aiIcon');
+  const aiTitle = document.getElementById('aiTitle');
+  const aiText = document.getElementById('aiText');
+  const aiFlow = document.getElementById('aiFlow');
+  const aiButtons = [...document.querySelectorAll('[data-ai]')];
+
+  function showAi(key) {
+    const item = aiParts[key];
+    aiDetail.style.setProperty('--ai-active', item.color);
+    aiIcon.textContent = item.icon;
+    aiTitle.textContent = item.title;
+    aiText.textContent = item.text;
+    aiFlow.innerHTML = item.flow.map((line, index) => (
+      `<div><b>${index + 1}</b><span>${line}</span></div>`
+    )).join('');
+    aiButtons.forEach(button => button.classList.toggle('active', button.dataset.ai === key));
+  }
+
+  aiButtons.forEach(button => {
+    button.addEventListener('click', () => showAi(button.dataset.ai));
+  });
+
+  const quiz = [
+    {
+      q: '哪一個零件像電腦的大腦？',
+      options: ['CPU 中央處理器', 'SSD 儲存裝置', '電源供應器'],
+      answer: 0,
+      ok: '答對了！CPU 會執行指令並做計算。'
+    },
+    {
+      q: '正在執行的程式通常會把資料暫時放在哪裡？',
+      options: ['RAM 記憶體', '螢幕', '滑鼠'],
+      answer: 0,
+      ok: '沒錯，RAM 是快速的暫存工作區。'
+    },
+    {
+      q: '哪一個零件最適合長期保存照片和文件？',
+      options: ['GPU 顯示卡', 'SSD / HDD 儲存裝置', '鍵盤'],
+      answer: 1,
+      ok: '正確！儲存裝置會在關機後繼續保存資料。'
+    },
+    {
+      q: '讓所有零件連接在一起的是哪一個？',
+      options: ['主機板', '喇叭', '網頁瀏覽器'],
+      answer: 0,
+      ok: '答對了，主機板就像電腦裡的道路系統。'
+    }
+  ];
+
+  let quizIndex = 0;
+  const question = document.getElementById('quizQuestion');
+  const options = document.getElementById('quizOptions');
+  const feedback = document.getElementById('quizFeedback');
+  const next = document.getElementById('quizNext');
+
+  function renderQuiz() {
+    const item = quiz[quizIndex];
+    question.textContent = item.q;
+    feedback.textContent = '';
+    options.innerHTML = '';
+    item.options.forEach((label, index) => {
+      const button = document.createElement('button');
+      button.className = 'quiz-option';
+      button.type = 'button';
+      button.textContent = label;
+      button.addEventListener('click', () => {
+        [...options.children].forEach(child => child.disabled = true);
+        if (index === item.answer) {
+          button.classList.add('correct');
+          feedback.textContent = item.ok;
+        } else {
+          button.classList.add('wrong');
+          options.children[item.answer].classList.add('correct');
+          feedback.textContent = '再想想看，綠色答案才是這題的關鍵。';
+        }
+      });
+      options.appendChild(button);
+    });
+  }
+
+  next.addEventListener('click', () => {
+    quizIndex = (quizIndex + 1) % quiz.length;
+    renderQuiz();
+  });
+
+  renderQuiz();
+  showPart('cpu');
+  showAi('data');
+</script>
+</body>
+</html>
